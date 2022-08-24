@@ -7,13 +7,13 @@ keywords = ["function", "global", "for", "end", "while", "if", "else", "elseif",
 n1 = {}
 n2 = {}
 
-def filter_token(token):
-    tok = token
-    while tok:
-        tok = break_token(tok)
+def token_filtration(token):
+    temp_token = token
+    while temp_token:
+        temp_token = break_token(temp_token)
 
 def break_token(token):
-    op_pos = len(token)
+    operator_position = len(token)
     for op in operators:
         if token.startswith(op):
             if op not in n1:
@@ -22,9 +22,9 @@ def break_token(token):
                 n1[op] += 1
             return token[len(op):]
         if op in token:
-            op_pos = min(op_pos, token.find(op))
+            op_pos = min(operator_position, token.find(op))
 
-    remaining_token = token[:op_pos]
+    remaining_token = token[:operator_position]
     for keyword in keywords:
         if remaining_token == keyword:
             # print(remaining_token)
@@ -42,9 +42,9 @@ def break_token(token):
             n2[remaining_token] += 1
             # print("***",remaining_token)
 
-    return token[op_pos:]
+    return token[operator_position:]
 
-def measure_halstead(N1, N2, n1, n2):
+def calculate_halstead_metrics(N1, N2, n1, n2):
     Vocabulary = n1 + n2
     Volume = (N1 + N2) * math.log(Vocabulary, 2)
     Difficulty = ((n1 / 2) * (N2 / n2))
@@ -55,11 +55,11 @@ def measure_halstead(N1, N2, n1, n2):
     print("Difficulty: ", Difficulty)
     print("Effort: ", Effort)
 
-def filter_comments(sourcecode_file):
+def comments_section_filtration(inputFile):
     singleline_comment_op_pos = -1
     filtered_lines = []
 
-    file = open(sourcecode_file)
+    file = open(inputFile)
     for line in file:
         if not line.strip():
             continue
@@ -75,8 +75,8 @@ def filter_comments(sourcecode_file):
 
     return filtered_lines
 
-def main(sourcecode_file):
-    lines = filter_comments(sourcecode_file)
+def main(inputFile):
+    lines = comments_section_filtration(inputFile)
 
     # print("Lines of Code: ", len(lines))
     for line in lines:
@@ -90,7 +90,7 @@ def main(sourcecode_file):
         tokens = line.strip().split()
         tokens = tokens + string_line
         for token in tokens:
-            filter_token(token)
+            token_filtration(token)
 
     print("********** Operators <n1> **********")
     for key, value in n1.items():
@@ -101,4 +101,4 @@ def main(sourcecode_file):
         print(key + " => " + str(value))
 
     print("********** **********")
-    measure_halstead(sum(n1.values()), sum(n2.values()), len(n1), len(n2))
+    calculate_halstead_metrics(sum(n1.values()), sum(n2.values()), len(n1), len(n2))
