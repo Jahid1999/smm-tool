@@ -5,8 +5,6 @@ while(a <= 0):
 	a += 1
 
 
-# Redowan sera, Mahdee kichu pare na :(
+# Redowan sera, Mahdee kichu pare na, and ami single :(
 print("exited")
 print("আমার দুই বন্ধু বিবাহিত!!")
-
-

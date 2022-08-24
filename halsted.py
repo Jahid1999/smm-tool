@@ -1,4 +1,3 @@
-import sys
 import math
 import re
 
@@ -7,22 +6,22 @@ keywords = ["function", "global", "for", "end", "while", "if", "else", "elseif",
 n1 = {}
 n2 = {}
 
-def token_filtration(token):
+def token_filterization(token):
     temp_token = token
     while temp_token:
-        temp_token = break_token(temp_token)
+        temp_token = token_slicing(temp_token)
 
-def break_token(token):
+def token_slicing(token):
     operator_position = len(token)
-    for op in operators:
-        if token.startswith(op):
-            if op not in n1:
-                n1[op] = 1
+    for operator in operators:
+        if token.startswith(operator):
+            if operator not in n1:
+                n1[operator] = 1
             else:
-                n1[op] += 1
-            return token[len(op):]
-        if op in token:
-            op_pos = min(operator_position, token.find(op))
+                n1[operator] += 1
+            return token[len(operator):]
+        if operator in token:
+            operator_position = min(operator_position, token.find(operator))
 
     remaining_token = token[:operator_position]
     for keyword in keywords:
@@ -44,7 +43,7 @@ def break_token(token):
 
     return token[operator_position:]
 
-def calculate_halstead_metrics(N1, N2, n1, n2):
+def calculate_hastead_metrics(N1, N2, n1, n2):
     Vocabulary = n1 + n2
     Volume = (N1 + N2) * math.log(Vocabulary, 2)
     Difficulty = ((n1 / 2) * (N2 / n2))
@@ -55,11 +54,11 @@ def calculate_halstead_metrics(N1, N2, n1, n2):
     print("Difficulty: ", Difficulty)
     print("Effort: ", Effort)
 
-def comments_section_filtration(inputFile):
+def commented_line_filtration(sourcecode_file):
     singleline_comment_op_pos = -1
     filtered_lines = []
 
-    file = open(inputFile)
+    file = open(sourcecode_file)
     for line in file:
         if not line.strip():
             continue
@@ -75,8 +74,8 @@ def comments_section_filtration(inputFile):
 
     return filtered_lines
 
-def main(inputFile):
-    lines = comments_section_filtration(inputFile)
+def main(input_file):
+    lines = commented_line_filtration(input_file)
 
     # print("Lines of Code: ", len(lines))
     for line in lines:
@@ -90,7 +89,7 @@ def main(inputFile):
         tokens = line.strip().split()
         tokens = tokens + string_line
         for token in tokens:
-            token_filtration(token)
+            token_filterization(token)
 
     print("********** Operators <n1> **********")
     for key, value in n1.items():
@@ -101,4 +100,5 @@ def main(inputFile):
         print(key + " => " + str(value))
 
     print("********** **********")
-    calculate_halstead_metrics(sum(n1.values()), sum(n2.values()), len(n1), len(n2))
+    calculate_hastead_metrics(sum(n1.values()), sum(n2.values()), len(n1), len(n2))
+
