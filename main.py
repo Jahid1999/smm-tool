@@ -1,4 +1,5 @@
 from pycfg.pycfg import PyCFG, CFGNode, slurp
+import halsted
 
 def cfg(inputFile, outputFile):
     agruments = []
@@ -43,4 +44,6 @@ if __name__ == '__main__':
     outputFile = "cfg_output.png"
     cfg(inputFile, outputFile)
     line_of_code(inputFile)
+    print('\n---------------Halstead Metric---------------')
+    halsted.main(inputFile)
 

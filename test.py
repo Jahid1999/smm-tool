@@ -7,6 +7,6 @@ while(a <= 0):
 
 # Redowan sera, Mahdee kichu pare na :(
 print("exited")
-print("Amar dui groupmate Bibahito!!")
+print("আমার দুই বন্ধু বিবাহিত!!")
 
 
