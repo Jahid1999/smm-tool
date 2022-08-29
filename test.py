@@ -1,9 +1,14 @@
-a= 10
-while(a <= 0):
-	if a == 5:
+a = 10
+b = 56
+c = -1
+for i in range(10):
+	print(i)
+	if a < b and b < c:
 		print(a)
-	a += 1
-
+	elif b<a and b<c:
+		print(b)
+	else:
+		print(c)
 
 # Redowan sera, Mahdee kichu pare na, and ami single :(
 print("exited")

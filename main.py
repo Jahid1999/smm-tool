@@ -1,5 +1,6 @@
 from pycfg.pycfg import PyCFG, CFGNode, slurp
 import halsted
+import ast
 
 def cfg(inputFile, outputFile):
     agruments = []
@@ -39,11 +40,36 @@ def line_of_code(inputFile):
     print('Commented lines =' + str(total_number_of_commented_lines))
     print('Executable lines = ' + str(total_number_of_lines - total_number_of_blank_lines - total_number_of_commented_lines))
 
+def cfg_raw(inputFile):
+    file = open(inputFile)
+    ast_tree = ast.parse(file.read())
+
+    # exec(compile(ast_tree, filename="", mode="exec"))
+    # print(ast.dump(ast_tree, indent=2))
+
+    forNum = 0
+    whileNum = 0
+    ifNum = 0
+
+    for n in ast.walk(ast_tree):
+        if n.__class__.__name__ == "For":
+            forNum += 1
+        if n.__class__.__name__ == "While":
+            whileNum += 1
+        if n.__class__.__name__ == "If":
+            ifNum += 1
+
+    print("Fors", forNum)
+    print("Whiles", whileNum)
+    print("Ifs", ifNum)
+    print("Complexity: ", forNum+whileNum+ifNum+1)
+
 if __name__ == '__main__':
     inputFile = "./test.py"
     outputFile = "cfg_output.png"
     cfg(inputFile, outputFile)
-    line_of_code(inputFile)
-    print('\n---------------Halstead Metric---------------')
-    halsted.main(inputFile)
+    # line_of_code(inputFile)
+    # print('\n---------------Halstead Metrics---------------')
+    # halsted.main(inputFile)
+    cfg_raw(inputFile)
 
