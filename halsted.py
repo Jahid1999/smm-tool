@@ -1,8 +1,13 @@
 import math
 import re
 
-operators = ["=", "+", "-", "*", "\\", "^", "\"", "\'", ".", "~", "|", "[", "]", "(", ")", ";", ":", "%", ",", "!", "<", ">", "&", "{", "}"]
-keywords = ["function", "global", "for", "end", "while", "if", "else", "elseif", "break", "switch", "case", "otherwise", "try", "catch", "end", "const", "import", "export", "type", "return", "true", "false", "in", "abstract", "module", "continue", "do", "join"]
+operators = ["=", "+", "-", "*", "\\", "^", "\"", "\'", ".", "~", "|", "[", "]", "(", ")",
+             ";", ":", "%", ",", "!", "<", ">", "&", "{", "}",
+             "function", "global", "for", "end", "while", "if", "else", "elseif",
+            "break", "switch", "case", "otherwise", "try", "catch", "end", "const",
+            "import", "export", "type", "return", "true", "false", "in", "abstract",
+             "print", "def", "module", "continue", "do", "join"]
+keywords = []
 n1 = {}
 n2 = {}
 
@@ -82,22 +87,29 @@ def main(input_file):
         string_line = []
         if '\"' in line:
             string_line = re.findall(r'"([^"]*)"', line)
+            for itm in string_line:
+                if itm not in n2:
+                    n2[itm] = 1
+                else:
+                    n2[itm] += 1
             for a in string_line:
                 line = line.replace(a, '')
                 line = line.replace("\"", '')
                 line = line.replace("\"", '')
         tokens = line.strip().split()
-        tokens = tokens + string_line
+        tokens = tokens
         for token in tokens:
             token_filterization(token)
 
     print("********** Operators <n1> **********")
-    for key, value in n1.items():
-        print(key + " => " + str(value))
+    print(n1)
+    # for key, value in n1.items():
+    #     print(key + " => " + str(value))
 
     print("********** Operands <n2> **********")
-    for key, value in n2.items():
-        print(key + " => " + str(value))
+    print(n2)
+    # for key, value in n2.items():
+    #     print(key + " => " + str(value))
 
     print("********** **********")
     calculate_hastead_metrics(sum(n1.values()), sum(n2.values()), len(n1), len(n2))
