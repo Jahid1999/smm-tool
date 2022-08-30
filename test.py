@@ -3,7 +3,7 @@ def odd_even(name, name2):
     count = 0
     if count == 0:
         print('even')
-    elif count !=0 :
+    elif count != 0 :
         print('odd')
     else:
         print('nothing')

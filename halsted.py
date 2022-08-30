@@ -102,6 +102,7 @@ def main(input_file):
     print("********** **********")
     calculate_hastead_metrics(sum(n1.values()), sum(n2.values()), len(n1), len(n2))
 
+
 if __name__ == '__main__':
     inputFile = "./test.py"
     main(inputFile)
