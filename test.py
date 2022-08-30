@@ -1,15 +1,32 @@
-a = 10
-b = 56
-c = -1
-for i in range(10):
-	print(i)
-	if a < b and b < c:
-		print(a)
-	elif b<a and b<c:
-		print(b)
-	else:
-		print(c)
+def odd_even(name, name2):
+    print('Hi, {name}')
+    count = 0
+    if count == 0:
+        print('even')
+    elif count !=0 :
+        print('odd')
+    else:
+        print('nothing')
+    while count < 10:
+        count = count + 1
+        print(count)
 
-# Redowan sera, Mahdee kichu pare na, and ami single :(
-print("exited")
-print("আমার দুই বন্ধু বিবাহিত!!")
+
+def hello_name(name, name2):
+    print('Hi, {name}')
+    count = 0
+    while count < 10:
+        count = count + 1
+        print(count)
+
+
+def print_number(name, name2):
+    print('Hi, {name}')
+    count = 12
+    if count == 12:
+        print(12)
+    elif count != 12:
+        print(10)
+    else:
+        print(0)
+
